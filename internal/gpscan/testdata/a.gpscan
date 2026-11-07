@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GrandPerspectiveScanDump appVersion="3.4.2" formatVersion="7">
+<ScanInfo volumePath="/" volumeSize="1000000" freeSpace="500000" scanTime="2026-10-31T21:35:41Z" fileSizeMeasure="physical">
+<Folder name="">
+<Folder name="Users">
+<File name="big.bin" size="1000"/>
+<File name="Tom &amp; &quot;Jerry&quot; &#233;.txt" size="10"/>
+<Folder name="old"><File name="x" size="300"/></Folder>
+</Folder>
+<Folder name="empty"/>
+<File name="kernel" size="50"/>
+</Folder>
+</ScanInfo>
+</GrandPerspectiveScanDump>

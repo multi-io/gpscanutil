@@ -1,0 +1,3 @@
+/gputil
+*.gpscan
+!internal/gpscan/testdata/*.gpscan
