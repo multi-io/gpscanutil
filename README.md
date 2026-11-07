@@ -60,6 +60,9 @@ gpscanutil diff old.gpscan new.gpscan --min-size 100M
 gpscanutil diff old.gpscan new.gpscan --tree --top 5
 ```
 
+See [EXAMPLE.md](EXAMPLE.md) for a complete `diff` run on two real scans, with
+an explanation of what changed.
+
 ## Shell completion
 
 `gpscanutil completion zsh|bash` prints a completion script. Add one of these
