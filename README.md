@@ -1,17 +1,17 @@
-# gputil
+# gpscanutil
 
 Command line tool for analyzing and comparing [GrandPerspective](https://grandperspectiv.sourceforge.net/)
 scan files (`.gpscan`, saved via *File → Save Scan Data* in GrandPerspective).
 
 ```
-go build -o gputil ./cmd/gputil      # or: go install ./cmd/gputil
+go build -o gpscanutil ./cmd/gpscanutil      # or: go install ./cmd/gpscanutil
 ```
 
 ## Usage
 
 ```
-gputil introspect [options] <file>            # biggest files/folders
-gputil diff       [options] <file1> <file2>   # biggest changes from file1 to file2
+gpscanutil introspect [options] <file>            # biggest files/folders
+gpscanutil diff       [options] <file1> <file2>   # biggest changes from file1 to file2
 ```
 
 By default a flat list of full paths is printed, sorted by size (`introspect`)
@@ -36,10 +36,10 @@ Options (may be given before or after the file arguments):
 Examples:
 
 ```
-gputil introspect scan.gpscan --files --top 20
-gputil introspect scan.gpscan --tree --root ~/Library --depth 2
-gputil diff old.gpscan new.gpscan --min-size 100M
-gputil diff old.gpscan new.gpscan --tree --top 5
+gpscanutil introspect scan.gpscan --files --top 20
+gpscanutil introspect scan.gpscan --tree --root ~/Library --depth 2
+gpscanutil diff old.gpscan new.gpscan --min-size 100M
+gpscanutil diff old.gpscan new.gpscan --tree --top 5
 ```
 
 ## Notes

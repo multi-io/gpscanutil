@@ -1,4 +1,4 @@
-// Command gputil analyzes and compares GrandPerspective scan files (.gpscan).
+// Command gpscanutil analyzes and compares GrandPerspective scan files (.gpscan).
 package main
 
 import (
@@ -12,11 +12,11 @@ import (
 	"github.com/oklischat/gpscanutil/internal/gpscan"
 )
 
-const usage = `gputil analyzes and compares GrandPerspective scan files (.gpscan).
+const usage = `gpscanutil analyzes and compares GrandPerspective scan files (.gpscan).
 
 Usage:
-  gputil introspect [options] <file>          list the biggest files/folders
-  gputil diff       [options] <file1> <file2> list the biggest changes from file1 to file2
+  gpscanutil introspect [options] <file>          list the biggest files/folders
+  gpscanutil diff       [options] <file1> <file2> list the biggest changes from file1 to file2
 
 By default a flat list of full paths is printed, sorted by size (introspect)
 or by absolute size change (diff). Folders are shown with a trailing "/".
@@ -70,10 +70,10 @@ func main() {
 		err = usageError(fmt.Sprintf("unknown command %q", cmd))
 	}
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "gputil:", err)
+		fmt.Fprintln(os.Stderr, "gpscanutil:", err)
 		var ue usageError
 		if errors.As(err, &ue) {
-			fmt.Fprintln(os.Stderr, "Run 'gputil help' for usage.")
+			fmt.Fprintln(os.Stderr, "Run 'gpscanutil help' for usage.")
 			os.Exit(2)
 		}
 		os.Exit(1)
