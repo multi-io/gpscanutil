@@ -42,6 +42,22 @@ gpscanutil diff old.gpscan new.gpscan --min-size 100M
 gpscanutil diff old.gpscan new.gpscan --tree --top 5
 ```
 
+## Shell completion
+
+`gpscanutil completion zsh|bash` prints a completion script. Add one of these
+to your shell's rc file:
+
+```
+eval "$(gpscanutil completion zsh)"     # ~/.zshrc, after compinit
+eval "$(gpscanutil completion bash)"    # ~/.bashrc (works with macOS's bash 3.2)
+```
+
+For zsh you can instead install it on your `$fpath`:
+`gpscanutil completion zsh > "${fpath[1]}/_gpscanutil"`.
+
+The scripts are generated from `flagSpecs` in `cmd/gpscanutil/completion.go`,
+and a test ensures that list matches the actual options.
+
 ## Notes
 
 Scan files of ~1.3 GB (~10M items) take about 5 s to read, and need about 1 GB

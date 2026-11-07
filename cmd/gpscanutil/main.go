@@ -17,6 +17,7 @@ const usage = `gpscanutil analyzes and compares GrandPerspective scan files (.gp
 Usage:
   gpscanutil introspect [options] <file>          list the biggest files/folders
   gpscanutil diff       [options] <file1> <file2> list the biggest changes from file1 to file2
+  gpscanutil completion zsh|bash                  print a shell completion script
 
 By default a flat list of full paths is printed, sorted by size (introspect)
 or by absolute size change (diff). Folders are shown with a trailing "/".
@@ -38,6 +39,10 @@ Options (may also be given after the file arguments):
   --tree         print an indented tree instead of a flat list
   --bytes        print sizes as exact byte counts
   -q             don't print progress messages to stderr
+
+Shell completion: add one of these to your ~/.zshrc or ~/.bashrc:
+  eval "$(gpscanutil completion zsh)"     # after compinit
+  eval "$(gpscanutil completion bash)"
 `
 
 type options struct {
@@ -63,6 +68,8 @@ func main() {
 		err = runIntrospect(os.Args[2:])
 	case "diff":
 		err = runDiff(os.Args[2:])
+	case "completion":
+		err = runCompletion(os.Args[2:])
 	case "help", "-h", "-help", "--help":
 		fmt.Print(usage)
 		return
@@ -84,10 +91,8 @@ type usageError string
 
 func (e usageError) Error() string { return string(e) }
 
-// parseArgs parses options and returns the positional arguments. Unlike the
-// plain flag package, it accepts options after positional arguments too.
-func parseArgs(name string, args []string, nargs int) (*options, []string, error) {
-	o := &options{}
+// newFlagSet registers the options. Keep flagSpecs (completion.go) in sync.
+func newFlagSet(name string, o *options) *flag.FlagSet {
 	fs := flag.NewFlagSet(name, flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
 	fs.IntVar(&o.top, "top", -1, "")
@@ -99,7 +104,14 @@ func parseArgs(name string, args []string, nargs int) (*options, []string, error
 	fs.BoolVar(&o.tree, "tree", false, "")
 	fs.BoolVar(&o.bytes, "bytes", false, "")
 	fs.BoolVar(&o.quiet, "q", false, "")
+	return fs
+}
 
+// parseArgs parses options and returns the positional arguments. Unlike the
+// plain flag package, it accepts options after positional arguments too.
+func parseArgs(name string, args []string, nargs int) (*options, []string, error) {
+	o := &options{}
+	fs := newFlagSet(name, o)
 	var pos []string
 	for {
 		if err := fs.Parse(args); err != nil {
