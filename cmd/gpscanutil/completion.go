@@ -32,6 +32,7 @@ var commands = []struct{ name, help string }{
 	{"introspect", "list the biggest files/folders of a scan"},
 	{"diff", "list the biggest changes between two scans"},
 	{"completion", "print a shell completion script"},
+	{"version", "print the version"},
 	{"help", "show usage"},
 }
 

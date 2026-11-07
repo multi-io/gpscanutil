@@ -3,8 +3,19 @@
 Command line tool for analyzing and comparing [GrandPerspective](https://grandperspectiv.sourceforge.net/)
 scan files (`.gpscan`, saved via *File → Save Scan Data* in GrandPerspective).
 
+## Installation
+
+With [Homebrew](https://brew.sh) (macOS and Linux; also installs shell completions):
+
 ```
-go build -o gpscanutil ./cmd/gpscanutil      # or: go install ./cmd/gpscanutil
+brew install multi-io/tap/gpscanutil
+```
+
+Or download a binary from the [releases page](https://github.com/multi-io/gpscanutil/releases),
+or build it with Go:
+
+```
+go install github.com/multi-io/gpscanutil/cmd/gpscanutil@latest
 ```
 
 ## Usage
@@ -57,6 +68,32 @@ For zsh you can instead install it on your `$fpath`:
 
 The scripts are generated from `flagSpecs` in `cmd/gpscanutil/completion.go`,
 and a test ensures that list matches the actual options.
+
+With Homebrew, the completions are installed automatically.
+
+## Releasing
+
+CI (`.github/workflows/ci.yml`) runs gofmt, `go vet` and the tests on every push
+and pull request. Pushing a `v*` tag additionally builds macOS and Linux
+binaries with [GoReleaser](https://goreleaser.com) (`.goreleaser.yaml`),
+publishes them as a GitHub release, and updates the formula in
+[multi-io/homebrew-tap](https://github.com/multi-io/homebrew-tap):
+
+```
+git tag v0.1.0 && git push origin v0.1.0
+```
+
+Tags with a `-` suffix (e.g. `v0.2.0-rc1`) become pre-releases and don't
+update the formula. The formula update needs a `HOMEBREW_TAP_TOKEN` secret: a
+fine-grained token with *Contents: read and write* access to the tap repo.
+Test release builds locally with `goreleaser release --snapshot --clean`.
+
+## Development
+
+```
+go test ./...
+go build -o gpscanutil ./cmd/gpscanutil
+```
 
 ## Notes
 

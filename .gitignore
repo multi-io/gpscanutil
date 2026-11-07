@@ -1,3 +1,4 @@
 /gpscanutil
 *.gpscan
 !internal/gpscan/testdata/*.gpscan
+/dist/

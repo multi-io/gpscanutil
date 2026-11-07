@@ -1,0 +1,38 @@
+# Template for the formula in https://github.com/multi-io/homebrew-tap,
+# filled in by render-formula.sh during the release workflow.
+class Gpscanutil < Formula
+  desc "Analyze and compare GrandPerspective disk usage scan files"
+  homepage "https://github.com/multi-io/gpscanutil"
+  version "@VERSION@"
+
+  on_macos do
+    on_arm do
+      url "@URL@/gpscanutil_@VERSION@_darwin_arm64.tar.gz"
+      sha256 "@SHA256_darwin_arm64@"
+    end
+    on_intel do
+      url "@URL@/gpscanutil_@VERSION@_darwin_amd64.tar.gz"
+      sha256 "@SHA256_darwin_amd64@"
+    end
+  end
+
+  on_linux do
+    on_arm do
+      url "@URL@/gpscanutil_@VERSION@_linux_arm64.tar.gz"
+      sha256 "@SHA256_linux_arm64@"
+    end
+    on_intel do
+      url "@URL@/gpscanutil_@VERSION@_linux_amd64.tar.gz"
+      sha256 "@SHA256_linux_amd64@"
+    end
+  end
+
+  def install
+    bin.install "gpscanutil"
+    generate_completions_from_executable(bin/"gpscanutil", "completion", shells: [:bash, :zsh])
+  end
+
+  test do
+    assert_match version.to_s, shell_output("#{bin}/gpscanutil version")
+  end
+end

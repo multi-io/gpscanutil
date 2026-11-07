@@ -7,9 +7,10 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"runtime/debug"
 	"time"
 
-	"github.com/oklischat/gpscanutil/internal/gpscan"
+	"github.com/multi-io/gpscanutil/internal/gpscan"
 )
 
 const usage = `gpscanutil analyzes and compares GrandPerspective scan files (.gpscan).
@@ -18,6 +19,7 @@ Usage:
   gpscanutil introspect [options] <file>          list the biggest files/folders
   gpscanutil diff       [options] <file1> <file2> list the biggest changes from file1 to file2
   gpscanutil completion zsh|bash                  print a shell completion script
+  gpscanutil version                              print the version
 
 By default a flat list of full paths is printed, sorted by size (introspect)
 or by absolute size change (diff). Folders are shown with a trailing "/".
@@ -70,6 +72,9 @@ func main() {
 		err = runDiff(os.Args[2:])
 	case "completion":
 		err = runCompletion(os.Args[2:])
+	case "version", "--version":
+		fmt.Println("gpscanutil", getVersion())
+		return
 	case "help", "-h", "-help", "--help":
 		fmt.Print(usage)
 		return
@@ -85,6 +90,20 @@ func main() {
 		}
 		os.Exit(1)
 	}
+}
+
+// version is set by the release build (-ldflags "-X main.version=...").
+var version = ""
+
+func getVersion() string {
+	if version != "" {
+		return version
+	}
+	// Built with "go install module@version".
+	if bi, ok := debug.ReadBuildInfo(); ok && bi.Main.Version != "" && bi.Main.Version != "(devel)" {
+		return bi.Main.Version
+	}
+	return "dev"
 }
 
 type usageError string

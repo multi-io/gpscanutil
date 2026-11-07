@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"slices"
 
-	"github.com/oklischat/gpscanutil/internal/gpscan"
+	"github.com/multi-io/gpscanutil/internal/gpscan"
 )
 
 func runIntrospect(args []string) error {

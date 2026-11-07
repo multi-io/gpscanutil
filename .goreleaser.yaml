@@ -1,0 +1,26 @@
+# Builds release binaries and creates the GitHub release; run by the CI
+# workflow on tag pushes. Try locally with: goreleaser release --snapshot --clean
+version: 2
+
+builds:
+  - main: ./cmd/gpscanutil
+    env:
+      - CGO_ENABLED=0
+    goos: [darwin, linux]
+    goarch: [amd64, arm64]
+    flags: [-trimpath]
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
+
+archives:
+  - name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files: [README.md]
+
+checksum:
+  name_template: checksums.txt
+
+release:
+  prerelease: auto
+
+changelog:
+  sort: asc
