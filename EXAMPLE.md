@@ -7,10 +7,12 @@ my home directory; a removed macOS software update accounting for most of the
 -3.2 GB in `/System/`; removed temporary copies of the Chrome app bundle
 (`com.google.Chrome.code_sign_clone`) accounting for most of the -6.9 GB in
 `/private/`; plus some smaller changes, all adding up to a +2.1 GB change in
-scanned files.
+scanned files. You can also reduce the output by adding an argument like
+`--depth 2`, which will print the same changes, but summed up for the topmost
+two directory levels.
 
-Chrome most likely creates those copies as APFS clones, which share their
-storage with the original app and take up almost no extra disk space.
+Chrome most likely creates the app bundle copies as APFS clones, which share
+their storage with the original app and take up almost no extra disk space.
 GrandPerspective counts each copy at its full size, though, so deleting them
 probably freed much less space than the -5.8 GB shown (and the real change
 outside the scan is correspondingly bigger than the -29.9 GB below).
