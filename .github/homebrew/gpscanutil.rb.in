@@ -4,6 +4,7 @@ class Gpscanutil < Formula
   desc "Analyze and compare GrandPerspective disk usage scan files"
   homepage "https://github.com/multi-io/gpscanutil"
   version "@VERSION@"
+  license "MIT"
 
   on_macos do
     on_arm do

@@ -101,3 +101,7 @@ Scan files of ~1.3 GB (~10M items) take about 5 s to read, and need about 1 GB
 of memory per scan. The file is memory-mapped and parsed with a minimal
 purpose-built XML scanner (`internal/gpscan`), since `encoding/xml` is far
 too slow for files of this size.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
