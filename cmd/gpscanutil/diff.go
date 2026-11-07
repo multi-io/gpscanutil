@@ -64,7 +64,9 @@ func printDiffHeader(files []string, trees [2]*gpscan.Tree) {
 		fmt.Printf("%-12s %16s %16s %16s\n", label, formatCount(x), formatCount(y), formatCountDelta(y-x))
 	}
 	row("Free space", a.Info.FreeSpace, b.Info.FreeSpace)
+	row("Used", usedSpace(a), usedSpace(b))
 	row("Scanned", a.Nodes[a.Root()].Size, b.Nodes[b.Root()].Size)
+	row("Not in scan", notInScan(a), notInScan(b))
 	countRow("Files", a.NumFiles, b.NumFiles)
 	countRow("Folders", a.NumDirs, b.NumDirs)
 }

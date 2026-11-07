@@ -33,11 +33,22 @@ func runIntrospect(args []string) error {
 
 func printScanHeader(file string, t *gpscan.Tree) {
 	i := t.Info
-	fmt.Printf("Scan:    %s  (%s, GrandPerspective %s, %s sizes)\n", file, i.ScanTime, i.AppVersion, i.SizeMeasure)
-	fmt.Printf("Volume:  %s  size %s, free %s\n", i.VolumePath, formatSize(i.VolumeSize, false), formatSize(i.FreeSpace, false))
-	fmt.Printf("Scanned: %s in %s files, %s folders\n",
+	fmt.Printf("Scan:         %s  (%s, GrandPerspective %s, %s sizes)\n", file, i.ScanTime, i.AppVersion, i.SizeMeasure)
+	fmt.Printf("Volume:       %s  size %s, used %s, free %s\n", i.VolumePath,
+		formatSize(i.VolumeSize, false), formatSize(usedSpace(t), false), formatSize(i.FreeSpace, false))
+	fmt.Printf("Scanned:      %s in %s files, %s folders\n",
 		formatSize(t.Nodes[t.Root()].Size, false), formatCount(t.NumFiles), formatCount(t.NumDirs))
+	fmt.Printf("Not in scan:  %s  (used space not accounted for by scanned files)\n", formatSize(notInScan(t), false))
 }
+
+// usedSpace returns the used space of the volume. On APFS this includes
+// everything in the container: other volumes (VM, Preboot, ...), snapshots,
+// files deleted while still open, and folders the scan couldn't read.
+func usedSpace(t *gpscan.Tree) int64 { return t.Info.VolumeSize - t.Info.FreeSpace }
+
+// notInScan returns the used space that the scanned files don't account for.
+// It can be negative, e.g. when clones or hard links are counted repeatedly.
+func notInScan(t *gpscan.Tree) int64 { return usedSpace(t) - t.Nodes[t.Root()].Size }
 
 type sized struct {
 	size int64

@@ -30,6 +30,13 @@ or by absolute size change (`diff`). Folders have a trailing `/`. In `diff`,
 `(new)` / `(gone)` mark items that exist in only one of the scans. A moved or
 renamed item shows up as one removal plus one addition.
 
+The header shows the volume's used space next to the scanned total. The
+difference ("Not in scan") is space GrandPerspective doesn't see. On APFS
+that includes the container's other volumes (swap in VM, Preboot, Recovery,
+...), snapshots, files that were deleted but are still held open, and folders
+the scan couldn't read. A large change in this number between scans (e.g.
+after a reboot) explains free space changes that the folder sizes don't.
+
 Options (may be given before or after the file arguments):
 
 | Option         | Meaning |
